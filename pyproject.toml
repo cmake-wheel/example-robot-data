@@ -1,2 +1,18 @@
+[project]
+name = "example-robot-data"
+version = "4.0.1"
+description = "Set of robot URDFs for benchmarking and developed examples."
+readme = "README.md"
+license= "BSD-3-Clause"
+dependencies = ["pin"]
+
+[project.urls]
+homepage = "https://github.com/gepetto/example-robot-data"
+
 [tool.isort]
 line_length = 88
+
+[build-system]
+requires = ["cmeel[build]", "pin", "cmeel-eigen", "cmeel-urdfdom-headers", "cmeel-tinyxml"]
+build-backend = "cmeel.build"
+run-tests-after-install = true
