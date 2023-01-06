@@ -9,10 +9,12 @@ dependencies = ["pin"]
 [project.urls]
 homepage = "https://github.com/gepetto/example-robot-data"
 
+[tool.cmeel]
+run-tests-after-install = true
+
 [tool.isort]
 line_length = 88
 
 [build-system]
 requires = ["cmeel[build]", "pin", "cmeel-eigen", "cmeel-urdfdom-headers", "cmeel-tinyxml"]
 build-backend = "cmeel.build"
-run-tests-after-install = true
