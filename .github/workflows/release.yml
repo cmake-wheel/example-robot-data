@@ -23,7 +23,7 @@ jobs:
       - run: python -m pip wheel -vw wh .
       - uses: actions/upload-artifact@v3
         with:
-          path: wh
+          path: wh/example_robot_data*
   release:
     needs: ["build_wheels"]
     runs-on: ubuntu-latest
