@@ -32,11 +32,20 @@ class RobotTestCase(unittest.TestCase):
                 self.assertIn(joint[12].decode(), one_kg_bodies)
         pybullet.disconnect(client_id)
 
+    def test_b1(self):
+        self.check("b1", 19, 18)
+
+    def test_go1(self):
+        self.check("go1", 19, 18)
+
     def test_a1(self):
         self.check("a1", 19, 18)
 
     def test_anymal(self):
         self.check("anymal", 19, 18)
+
+    def test_anymal_c(self):
+        self.check("anymal_c", 19, 18)
 
     def test_anymal_kinova(self):
         self.check("anymal_kinova", 25, 24)

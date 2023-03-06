@@ -153,6 +153,24 @@ class RobotLoader(object):
         self.robot.model.lowerPositionLimit = lb
 
 
+class B1Loader(RobotLoader):
+    path = "b1_description"
+    urdf_filename = "b1.urdf"
+    urdf_subpath = "urdf"
+    srdf_filename = "b1.srdf"
+    ref_posture = "standing"
+    free_flyer = True
+
+
+class Go1Loader(RobotLoader):
+    path = "go1_description"
+    urdf_filename = "go1.urdf"
+    urdf_subpath = "urdf"
+    srdf_filename = "go1.srdf"
+    ref_posture = "standing"
+    free_flyer = True
+
+
 class A1Loader(RobotLoader):
     path = "a1_description"
     urdf_filename = "a1.urdf"
@@ -164,6 +182,15 @@ class A1Loader(RobotLoader):
 
 class ANYmalLoader(RobotLoader):
     path = "anymal_b_simple_description"
+    urdf_filename = "anymal.urdf"
+    srdf_filename = "anymal.srdf"
+    ref_posture = "standing"
+    free_flyer = True
+
+
+class ANYmalCLoader(RobotLoader):
+    path = "anymal_c_simple_description"
+    urdf_subpath = "urdf"
     urdf_filename = "anymal.urdf"
     srdf_filename = "anymal.srdf"
     ref_posture = "standing"
@@ -385,6 +412,8 @@ class PandaLoader(RobotLoader):
     path = "panda_description"
     urdf_filename = "panda.urdf"
     urdf_subpath = "urdf"
+    srdf_filename = "panda.srdf"
+    ref_posture = "default"
 
 
 class AllegroRightHandLoader(RobotLoader):
@@ -484,8 +513,11 @@ class IrisLoader(RobotLoader):
 
 
 ROBOTS = {
+    "b1": B1Loader,
+    "go1": Go1Loader,
     "a1": A1Loader,
     "anymal": ANYmalLoader,
+    "anymal_c": ANYmalCLoader,
     "anymal_kinova": ANYmalKinovaLoader,
     "asr_twodof": AsrTwoDofLoader,
     "baxter": BaxterLoader,
@@ -531,7 +563,7 @@ ROBOTS = {
 
 
 def loader(name, display=False, rootNodeName=""):
-    """Load a robot by its name, and optionnaly display it in a viewer."""
+    """Load a robot by its name, and optionally display it in a viewer."""
     if name not in ROBOTS:
         robots = ", ".join(sorted(ROBOTS.keys()))
         raise ValueError(
