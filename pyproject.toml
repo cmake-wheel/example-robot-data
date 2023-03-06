@@ -12,7 +12,7 @@ homepage = "https://github.com/gepetto/example-robot-data"
 [tool.cmeel]
 run-tests-after-install = true
 pyver-any = true
-build-number = 3
+build-number = 4
 
 [tool.isort]
 line_length = 88
