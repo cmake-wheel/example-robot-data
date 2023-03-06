@@ -12,6 +12,7 @@ homepage = "https://github.com/gepetto/example-robot-data"
 [tool.cmeel]
 build-number = 1
 run-tests-after-install = true
+any = true
 
 [tool.isort]
 line_length = 88
