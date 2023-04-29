@@ -1,21 +1,24 @@
+[build-system]
+build-backend = "cmeel.build"
+requires = ["cmeel[build]", "pin[build]"]
+
 [project]
+dependencies = ["pin"]
+description = "Set of robot URDFs for benchmarking and developed examples."
+license = "BSD-3-Clause"
 name = "example-robot-data"
 version = "4.0.5"
-description = "Set of robot URDFs for benchmarking and developed examples."
-license= "BSD-3-Clause"
-dependencies = ["pin"]
 
 [project.urls]
 homepage = "https://github.com/gepetto/example-robot-data"
 
 [tool.cmeel]
-run-tests-after-install = true
-pyver-any = true
 build-number = 4
+pyver-any = true
+run-tests-after-install = true
 
 [tool.isort]
 line_length = 88
 
-[build-system]
-build-backend = "cmeel.build"
-requires = ["cmeel[build]", "pin[build]"]
+[tool.tomlsort]
+all = true
