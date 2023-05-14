@@ -13,7 +13,7 @@ version = "4.0.6"
 homepage = "https://github.com/gepetto/example-robot-data"
 
 [tool.cmeel]
-build-number = 1
+build-number = 2
 pyver-any = true
 run-tests-after-install = true
 
