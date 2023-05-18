@@ -7,13 +7,12 @@ dependencies = ["pin"]
 description = "Set of robot URDFs for benchmarking and developed examples."
 license = "BSD-3-Clause"
 name = "example-robot-data"
-version = "4.0.6"
+version = "4.0.7"
 
 [project.urls]
 homepage = "https://github.com/gepetto/example-robot-data"
 
 [tool.cmeel]
-build-number = 2
 pyver-any = true
 run-tests-after-install = true
 
