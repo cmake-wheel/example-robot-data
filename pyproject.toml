@@ -1,12 +1,12 @@
 [build-system]
 build-backend = "cmeel.build"
-requires = ["cmeel[build]", "pin[build]"]
+requires = ["cmeel[build]", "pin3x-jnrh2023"]
 
 [project]
-dependencies = ["pin"]
+dependencies = ["pin3x-jnrh2023"]
 description = "Set of robot URDFs for benchmarking and developed examples."
 license = "BSD-3-Clause"
-name = "example-robot-data"
+name = "example-robot-data-jnrh2023"
 version = "4.0.7"
 
 [project.urls]
