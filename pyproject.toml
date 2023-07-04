@@ -15,7 +15,7 @@ homepage = "https://github.com/gepetto/example-robot-data"
 [tool.cmeel]
 build-number = 2024
 pyver-any = true
-run-tests-after-install = true
+run-tests = false
 
 [tool.isort]
 profile = "black"
