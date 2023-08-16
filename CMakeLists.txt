@@ -42,7 +42,8 @@ include("${JRL_CMAKE_MODULES}/base.cmake")
 
 # Print initial message
 message(STATUS "${PROJECT_DESCRIPTION}, version ${PROJECT_VERSION}")
-message(STATUS "Copyright (C) 2018-2021 LAAS-CNRS, University of Edinburgh")
+message(STATUS "Copyright (C) 2018-2023 LAAS-CNRS, University of Edinburgh")
+message(STATUS "                        Heriot-Watt University, INRIA")
 message(STATUS "All rights reserved.")
 message(STATUS "Released under the BSD 3-Clause License.")
 
@@ -52,6 +53,7 @@ project(${PROJECT_NAME} ${PROJECT_ARGS})
 
 if(BUILD_PYTHON_INTERFACE)
   add_project_dependency(eigenpy 2.7.11 REQUIRED)
+  include("${JRL_CMAKE_MODULES}/python.cmake")
   add_project_dependency(pinocchio REQUIRED)
   string(REGEX REPLACE "-" "_" PY_NAME ${PROJECT_NAME})
   add_subdirectory(python)
