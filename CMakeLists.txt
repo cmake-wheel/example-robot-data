@@ -1,10 +1,10 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.10)
 
 # Project properties
 set(PROJECT_ORG gepetto)
 set(PROJECT_NAME example-robot-data)
 set(PROJECT_DESCRIPTION
-    "Set of robot URDFs for benchmarking and developed examples.")
+    "Set of robot URDFs for benchmarking and developed examples")
 set(PROJECT_URL https://github.com/${PROJECT_ORG}/${PROJECT_NAME})
 
 # Project options
@@ -54,6 +54,8 @@ project(${PROJECT_NAME} ${PROJECT_ARGS})
 if(BUILD_PYTHON_INTERFACE)
   add_project_dependency(eigenpy 2.7.11 REQUIRED)
   include("${JRL_CMAKE_MODULES}/python.cmake")
+  set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/find-external/CppAD/"
+                        ${CMAKE_MODULE_PATH})
   add_project_dependency(pinocchio REQUIRED)
   string(REGEX REPLACE "-" "_" PY_NAME ${PROJECT_NAME})
   add_subdirectory(python)
