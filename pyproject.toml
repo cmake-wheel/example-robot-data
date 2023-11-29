@@ -13,6 +13,7 @@ version = "4.0.9"
 homepage = "https://github.com/gepetto/example-robot-data"
 
 [tool.cmeel]
+build-number = 1
 has-binaries = false
 run-tests-after-install = true
 
