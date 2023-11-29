@@ -7,7 +7,7 @@ dependencies = ["pin"]
 description = "Set of robot URDFs for benchmarking and developed examples."
 license = "BSD-3-Clause"
 name = "example-robot-data"
-version = "4.0.8"
+version = "4.0.9"
 
 [project.urls]
 homepage = "https://github.com/gepetto/example-robot-data"
