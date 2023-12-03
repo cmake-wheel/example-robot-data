@@ -10,7 +10,8 @@ name = "example-robot-data"
 version = "4.0.9"
 
 [project.urls]
-homepage = "https://github.com/gepetto/example-robot-data"
+homepage = "https://github.com/cmake-wheel/example-robot-data"
+upstream = "https://github.com/gepetto/example-robot-data"
 
 [tool.cmeel]
 build-number = 1
