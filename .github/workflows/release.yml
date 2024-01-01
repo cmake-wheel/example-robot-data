@@ -66,7 +66,7 @@ jobs:
         run: >
           git verify-tag --raw ${{ github.ref_name }} 2>&1
           | grep -q 'VALIDSIG 9B1A79065D2F2B806C8A5A1C7D2ACDAF4653CF28'
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
       - run: pipx install twine
       - run: twine upload -u __token__ -p "${{ secrets.PYPI_TOKEN }}" artifact/example_robot_data*.whl
       - run: twine upload -u __token__ -p "${{ secrets.PYPI_TOKEN }}" artifact/example_robot_data*.tar.gz || true
