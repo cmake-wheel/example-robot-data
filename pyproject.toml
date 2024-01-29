@@ -14,6 +14,7 @@ homepage = "https://github.com/cmake-wheel/example-robot-data"
 upstream = "https://github.com/gepetto/example-robot-data"
 
 [tool.cmeel]
+build-number = 1
 has-binaries = false
 run-tests-after-install = true
 
