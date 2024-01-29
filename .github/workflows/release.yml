@@ -31,7 +31,7 @@ jobs:
       - run: python -m pip wheel -vw wh .
       - uses: actions/upload-artifact@v4
         with:
-          name: "artifact-${{ python-version }}"
+          name: "artifact-${{ matrix.python-version }}"
           path: wh/example_robot_data*.whl
 
   sdist:
