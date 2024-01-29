@@ -100,9 +100,9 @@ class RobotLoader(object):
                     self.robot = builder(
                         self.df_path,
                         package_dirs=[join(self.model_path, "../..")],
-                        root_joint=pin.JointModelFreeFlyer()
-                        if self.free_flyer
-                        else None,
+                        root_joint=(
+                            pin.JointModelFreeFlyer() if self.free_flyer else None
+                        ),
                         root_link_name=self.sdf_root_link_name,
                         parent_guidance=self.sdf_parent_guidance,
                     )
@@ -110,9 +110,9 @@ class RobotLoader(object):
                     self.robot = builder(
                         self.df_path,
                         package_dirs=[join(self.model_path, "../..")],
-                        root_joint=pin.JointModelFreeFlyer()
-                        if self.free_flyer
-                        else None,
+                        root_joint=(
+                            pin.JointModelFreeFlyer() if self.free_flyer else None
+                        ),
                     )
             except AttributeError:
                 raise ImportError("Building SDF models require pinocchio >= 3.0.0")
@@ -143,6 +143,8 @@ class RobotLoader(object):
         else:
             self.srdf_path = None
             self.robot.q0 = pin.neutral(self.robot.model)
+        root = getModelPath(self.path)
+        self.robot.urdf = join(root, self.path, self.urdf_subpath, self.urdf_filename)
 
         if self.free_flyer:
             self.addFreeFlyerJointLimits()
@@ -181,6 +183,20 @@ class A1Loader(RobotLoader):
     srdf_filename = "a1.srdf"
     ref_posture = "standing"
     free_flyer = True
+
+
+class Z1Loader(RobotLoader):
+    path = "z1_description"
+    urdf_filename = "z1.urdf"
+    urdf_subpath = "urdf"
+    srdf_filename = "z1.srdf"
+    ref_posture = "arm_up"
+
+
+class B1Z1Loader(B1Loader):
+    urdf_filename = "b1-z1.urdf"
+    srdf_filename = "b1-z1.srdf"
+    ref_posture = "standing_with_arm_home"
 
 
 class ANYmalLoader(RobotLoader):
@@ -360,6 +376,16 @@ class BoltLoader(RobotLoader):
     free_flyer = True
 
 
+class BorinotLoader(RobotLoader):
+    path = "borinot_description"
+    urdf_subpath = "urdf"
+    srdf_subpath = "srdf"
+    urdf_filename = "borinot_flying_arm_2.urdf"
+    srdf_filename = "borinot_flying_arm_2.srdf"
+    ref_posture = "home"
+    free_flyer = True
+
+
 class Solo8Loader(RobotLoader):
     path = "solo_description"
     urdf_filename = "solo.urdf"
@@ -475,6 +501,16 @@ class HectorLoader(RobotLoader):
     free_flyer = True
 
 
+class HextiltLoader(RobotLoader):
+    path = "hextilt_description"
+    urdf_subpath = "urdf"
+    srdf_subpath = "srdf"
+    urdf_filename = "hextilt_flying_arm_5.urdf"
+    srdf_filename = "hextilt_flying_arm_5.srdf"
+    ref_posture = "home"
+    free_flyer = True
+
+
 class DoublePendulumLoader(RobotLoader):
     path = "double_pendulum_description"
     urdf_filename = "double_pendulum.urdf"
@@ -487,6 +523,13 @@ class DoublePendulumContinuousLoader(DoublePendulumLoader):
 
 class DoublePendulumSimpleLoader(DoublePendulumLoader):
     urdf_filename = "double_pendulum_simple.urdf"
+
+
+class QuadrupedLoader(RobotLoader):
+    path = "quadruped_description"
+    urdf_subpath = "urdf"
+    urdf_filename = "quadruped.urdf"
+    free_flyer = True
 
 
 class RomeoLoader(RobotLoader):
@@ -519,6 +562,8 @@ ROBOTS = {
     "b1": B1Loader,
     "go1": Go1Loader,
     "a1": A1Loader,
+    "z1": Z1Loader,
+    "b1_z1": B1Z1Loader,
     "anymal": ANYmalLoader,
     "anymal_c": ANYmalCLoader,
     "anymal_kinova": ANYmalKinovaLoader,
@@ -529,6 +574,7 @@ ROBOTS = {
     "double_pendulum_continuous": DoublePendulumContinuousLoader,
     "double_pendulum_simple": DoublePendulumSimpleLoader,
     "hector": HectorLoader,
+    "hextilt": HextiltLoader,
     "hyq": HyQLoader,
     "icub": ICubLoader,
     "icub_reduced": ICubReducedLoader,
@@ -538,10 +584,12 @@ ROBOTS = {
     "panda": PandaLoader,
     "allegro_right_hand": AllegroRightHandLoader,
     "allegro_left_hand": AllegroLeftHandLoader,
+    "quadruped": QuadrupedLoader,
     "romeo": RomeoLoader,
     "simple_humanoid": SimpleHumanoidLoader,
     "simple_humanoid_classical": SimpleHumanoidClassicalLoader,
     "bolt": BoltLoader,
+    "borinot": BorinotLoader,
     "solo8": Solo8Loader,
     "solo12": Solo12Loader,
     "finger_edu": FingerEduLoader,
