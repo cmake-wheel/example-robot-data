@@ -14,12 +14,17 @@ homepage = "https://github.com/cmake-wheel/example-robot-data"
 upstream = "https://github.com/gepetto/example-robot-data"
 
 [tool.cmeel]
-build-number = 1
 has-binaries = false
 run-tests-after-install = true
 
-[tool.isort]
-profile = "black"
+[tool.ruff]
+extend-exclude = ["cmake"]
+
+[tool.ruff.lint]
+extend-select = ["I", "NPY", "RUF", "UP", "W"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["example_robot_data"]
 
 [tool.tomlsort]
 all = true

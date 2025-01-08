@@ -1,4 +1,5 @@
 import sys
+import typing
 from os.path import dirname, exists, join
 
 import numpy as np
@@ -34,9 +35,9 @@ def getModelPath(subpath, verbose=False):
     for path in paths:
         if exists(join(path, subpath.strip("/"))):
             if verbose:
-                print("using %s as modelPath" % path)
+                print(f"using {path} as modelPath")
             return path
-    raise IOError("%s not found" % subpath)
+    raise OSError(f"{subpath} not found")
 
 
 def readParamsFromSrdf(
@@ -59,13 +60,13 @@ def readParamsFromSrdf(
     return q0
 
 
-class RobotLoader(object):
+class RobotLoader:
     path = ""
     urdf_filename = ""
     srdf_filename = ""
     sdf_filename = ""
     sdf_root_link_name = ""
-    sdf_parent_guidance = []
+    sdf_parent_guidance: typing.ClassVar = []
     urdf_subpath = "robots"
     srdf_subpath = "srdf"
     sdf_subpath = ""
@@ -176,6 +177,69 @@ class Go1Loader(RobotLoader):
     free_flyer = True
 
 
+class FalconBravo7NoEndEffectorLoader(RobotLoader):
+    path = "falcon_description"
+    urdf_filename = "falcon_bravo7_no_ee.urdf"
+    urdf_subpath = "urdf"
+    srdf_filename = "falcon_bravo7_no_ee.srdf"
+    ref_posture = "standing"
+    free_flyer = True
+
+
+class BluevoltaBravo7NoEndEffectorLoader(RobotLoader):
+    path = "bluevolta_description"
+    urdf_filename = "bluevolta_bravo7_no_ee.urdf"
+    urdf_subpath = "urdf"
+    srdf_filename = "bluevolta_bravo7_no_ee.srdf"
+    ref_posture = "standing"
+    free_flyer = True
+
+
+class FalconBravo7GripperLoader(RobotLoader):
+    path = "falcon_description"
+    urdf_filename = "falcon_bravo7_gripper.urdf"
+    urdf_subpath = "urdf"
+    srdf_filename = "falcon_bravo7_gripper.srdf"
+    ref_posture = "standing"
+    free_flyer = True
+
+
+class BluevoltaBravo7GripperLoader(RobotLoader):
+    path = "bluevolta_description"
+    urdf_filename = "bluevolta_bravo7_gripper.urdf"
+    urdf_subpath = "urdf"
+    srdf_filename = "bluevolta_bravo7_gripper.srdf"
+    ref_posture = "standing"
+    free_flyer = True
+
+
+class Bravo7NoEndEffectorLoader(RobotLoader):
+    path = "bravo7_description"
+    urdf_filename = "bravo7_no_ee.urdf"
+    urdf_subpath = "urdf"
+    srdf_filename = "bravo7_no_ee.srdf"
+    ref_posture = "standing"
+    free_flyer = False
+
+
+class Bravo7GripperLoader(RobotLoader):
+    path = "bravo7_description"
+    urdf_filename = "bravo7_gripper.urdf"
+    urdf_subpath = "urdf"
+    srdf_filename = "bravo7_gripper.srdf"
+    ref_posture = "standing"
+    free_flyer = False
+
+
+class Go2Loader(RobotLoader):
+    path = "go2_description"
+    urdf_filename = "go2.urdf"
+    urdf_subpath = "urdf"
+    srdf_filename = "go2.srdf"
+    ref_posture = "standing"
+    free_flyer = True
+
+
 class A1Loader(RobotLoader):
     path = "a1_description"
     urdf_filename = "a1.urdf"
@@ -246,7 +310,7 @@ class CassieLoader(RobotLoader):
     ref_posture = "standing"
     free_flyer = True
     sdf_root_link_name = "pelvis"
-    sdf_parent_guidance = [
+    sdf_parent_guidance: typing.ClassVar = [
         "left-roll-op",
         "left-yaw-op",
         "left-pitch-op",
@@ -295,7 +359,7 @@ class TalosArmLoader(TalosLoader):
 
 class TalosLegsLoader(TalosLoader):
     def __init__(self, verbose=False):
-        super(TalosLegsLoader, self).__init__(verbose=verbose)
+        super().__init__(verbose=verbose)
         legMaxId = 14
         m1 = self.robot.model
         m2 = pin.Model()
@@ -332,7 +396,10 @@ class TalosLegsLoader(TalosLoader):
 
         # q2 = self.robot.q0[:19]
         for f in m1.frames:
-            if f.parent < legMaxId:
+            if tuple(int(i) for i in pin.__version__.split(".")) >= (3, 0, 0):
+                if f.parentJoint < legMaxId:
+                    m2.addFrame(f)
+            elif f.parent < legMaxId:
                 m2.addFrame(f)
 
         g2 = pin.GeometryModel()
@@ -442,6 +509,30 @@ class PandaLoader(RobotLoader):
     urdf_filename = "panda.urdf"
     urdf_subpath = "urdf"
     srdf_filename = "panda.srdf"
+    ref_posture = "default"
+
+
+class AlexNubHandsLoader(RobotLoader):
+    path = "alex_description"
+    urdf_filename = "alex_nub_hands.urdf"
+    urdf_subpath = "urdf"
+    srdf_filename = "alex_nub_hands.srdf"
+    ref_posture = "default"
+
+
+class AlexPsyonicHandsLoader(RobotLoader):
+    path = "alex_description"
+    urdf_filename = "alex_psyonic_hands.urdf"
+    urdf_subpath = "urdf"
+    srdf_filename = "alex_psyonic_hands.srdf"
+    ref_posture = "default"
+
+
+class AlexSakeHandsLoader(RobotLoader):
+    path = "alex_description"
+    urdf_filename = "alex_sake_hands.urdf"
+    urdf_subpath = "urdf"
+    srdf_filename = "alex_sake_hands.srdf"
     ref_posture = "default"
 
 
@@ -558,9 +649,25 @@ class IrisLoader(RobotLoader):
     free_flyer = True
 
 
+class PR2Loader(RobotLoader):
+    path = "pr2_description"
+    urdf_filename = "pr2.urdf"
+    urdf_subpath = "urdf"
+    srdf_filename = "pr2.srdf"
+    free_flyer = True
+    ref_posture = "tuck_left_arm"
+
+
 ROBOTS = {
     "b1": B1Loader,
+    "bravo7_gripper": Bravo7GripperLoader,
+    "bravo7_no_ee": Bravo7NoEndEffectorLoader,
+    "falcon_bravo7_no_ee": FalconBravo7NoEndEffectorLoader,
+    "falcon_bravo7_gripper": FalconBravo7GripperLoader,
+    "bluevolta_bravo7_no_ee": BluevoltaBravo7NoEndEffectorLoader,
+    "bluevolta_bravo7_gripper": BluevoltaBravo7GripperLoader,
     "go1": Go1Loader,
+    "go2": Go2Loader,
     "a1": A1Loader,
     "z1": Z1Loader,
     "b1_z1": B1Z1Loader,
@@ -582,6 +689,9 @@ ROBOTS = {
     "kinova": KinovaLoader,
     "laikago": LaikagoLoader,
     "panda": PandaLoader,
+    "alex_nub_hands": AlexNubHandsLoader,
+    "alex_psyonic_hands": AlexPsyonicHandsLoader,
+    "alex_sake_hands": AlexSakeHandsLoader,
     "allegro_right_hand": AllegroRightHandLoader,
     "allegro_left_hand": AllegroLeftHandLoader,
     "quadruped": QuadrupedLoader,
@@ -593,6 +703,7 @@ ROBOTS = {
     "solo8": Solo8Loader,
     "solo12": Solo12Loader,
     "finger_edu": FingerEduLoader,
+    "pr2": PR2Loader,
     "talos": TalosLoader,
     "talos_box": TalosBoxLoader,
     "talos_arm": TalosArmLoader,
@@ -617,9 +728,7 @@ def loader(name, display=False, rootNodeName="", verbose=False):
     """Load a robot by its name, and optionally display it in a viewer."""
     if name not in ROBOTS:
         robots = ", ".join(sorted(ROBOTS.keys()))
-        raise ValueError(
-            "Robot '%s' not found. Possible values are %s" % (name, robots)
-        )
+        raise ValueError(f"Robot '{name}' not found. Possible values are {robots}")
     inst = ROBOTS[name](verbose=verbose)
     if display:
         if rootNodeName:

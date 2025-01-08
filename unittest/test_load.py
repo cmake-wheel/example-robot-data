@@ -39,6 +39,9 @@ class RobotTestCase(unittest.TestCase):
     def test_go1(self):
         self.check("go1", 19, 18)
 
+    def test_go2(self):
+        self.check("go2", 19, 18)
+
     def test_a1(self):
         self.check("a1", 19, 18)
 
@@ -54,6 +57,24 @@ class RobotTestCase(unittest.TestCase):
     def test_baxter(self):
         self.check("baxter", 19, 19)
 
+    def test_bravo7_gripper(self):
+        self.check("bravo7_gripper", 11, 8)
+
+    def test_bravo7_no_ee(self):
+        self.check("bravo7_no_ee", 9, 6)
+
+    def test_falcon_bravo7_no_ee(self):
+        self.check("falcon_bravo7_no_ee", 16, 12)
+
+    def test_bluevolta_bravo7_no_ee(self):
+        self.check("bluevolta_bravo7_no_ee", 16, 12)
+
+    def test_falcon_bravo7_gripper(self):
+        self.check("falcon_bravo7_gripper", 18, 14)
+
+    def test_bluevolta_bravo7_gripeer(self):
+        self.check("bluevolta_bravo7_gripper", 18, 14)
+
     def test_cassie(self):
         try:
             self.check("cassie", 29, 28)
@@ -61,7 +82,8 @@ class RobotTestCase(unittest.TestCase):
             import pinocchio
 
             pin_version = tuple(int(i) for i in pinocchio.__version__.split("."))
-            self.assertLess(pin_version, (2, 9, 1))
+            if pin_version >= (2, 9, 1):
+                self.skipTest("Pinocchio v3 release is in progress.")
 
     def test_double_pendulum(self):
         self.check("double_pendulum", 2, 2)
@@ -95,6 +117,15 @@ class RobotTestCase(unittest.TestCase):
 
     def test_panda(self):
         self.check("panda", 9, 9)
+
+    def test_alex_nub_hands(self):
+        self.check("alex_nub_hands", 19, 19)
+
+    def test_alex_psyonic_hands(self):
+        self.check("alex_psyonic_hands", 39, 39)
+
+    def test_alex_sake_hands(self):
+        self.check("alex_sake_hands", 23, 23)
 
     def test_allegro_right(self):
         self.check("allegro_right_hand", 16, 16)
@@ -138,6 +169,9 @@ class RobotTestCase(unittest.TestCase):
 
     def test_laikago(self):
         self.check("laikago", 19, 18)
+
+    def test_pr2(self):
+        self.check("pr2", 41, 36)
 
     def test_talos_box(self):
         self.check("talos_box", 39, 38)
