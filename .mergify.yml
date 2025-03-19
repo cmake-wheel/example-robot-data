@@ -7,7 +7,6 @@ pull_request_rules:
       - check-success = "Build cp313 ubuntu-24.04"
       - check-success = "Build cp38 ubuntu-24.04"
       - check-success = "Build cp39 ubuntu-24.04"
-      - check-success = "release"
       - check-success = "sdist"
       - check-success = "Test cp310 ubuntu-24.04"
       - check-success = "Test cp311 ubuntu-24.04"
