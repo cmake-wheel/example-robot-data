@@ -2,6 +2,7 @@ import sys
 import typing
 from os.path import dirname, exists, join
 
+import hppfcl
 import numpy as np
 import pinocchio as pin
 from pinocchio.robot_wrapper import RobotWrapper
@@ -158,6 +159,21 @@ class RobotLoader:
         lb[:7] = -1
         self.robot.model.lowerPositionLimit = lb
 
+    def generate_capsule_name(self, base_name: str, existing_names: list) -> str:
+        """Generates a unique capsule name for a geometry object.
+
+        Args:
+            base_name (str): The base name of the geometry object.
+            existing_names (list): List of names already assigned to capsules.
+
+        Returns:
+            str: Unique capsule name.
+        """
+        i = 0
+        while f"{base_name}_capsule_{i}" in existing_names:
+            i += 1
+        return f"{base_name}_capsule_{i}"
+
 
 class B1Loader(RobotLoader):
     path = "b1_description"
@@ -296,7 +312,10 @@ class ANYmalKinovaLoader(ANYmalLoader):
 class BaxterLoader(RobotLoader):
     path = "baxter_description"
     urdf_filename = "baxter.urdf"
+    srdf_filename = "baxter_manipulation.srdf"
     urdf_subpath = "urdf"
+    srdf_subpath = "srdf"
+    ref_posture = "neutral"
 
 
 class CassieLoader(RobotLoader):
@@ -493,6 +512,11 @@ class TiagoNoHandLoader(TiagoLoader):
     urdf_filename = "tiago_no_hand.urdf"
 
 
+class TiagoProLoader(RobotLoader):
+    path = "tiago_pro_description"
+    urdf_filename = "tiago_pro.urdf"
+
+
 class ICubLoader(RobotLoader):
     path = "icub_description"
     urdf_filename = "icub.urdf"
@@ -510,6 +534,50 @@ class PandaLoader(RobotLoader):
     urdf_subpath = "urdf"
     srdf_filename = "panda.srdf"
     ref_posture = "default"
+
+
+class PandaLoaderCollision(PandaLoader):
+    urdf_filename = "panda_collision.urdf"
+
+    def __init__(self, verbose=False):
+        super().__init__(verbose=verbose)
+
+        cmodel = self.robot.collision_model.copy()
+        list_names_capsules = []
+        # Iterate through geometry objects in the collision model
+        for geom_object in cmodel.geometryObjects:
+            geometry = geom_object.geometry
+            # Remove superfluous suffix from the name
+            base_name = "_".join(geom_object.name.split("_")[:-1])
+
+            # Convert cylinders to capsules
+            if isinstance(geometry, hppfcl.Cylinder):
+                name = self.generate_capsule_name(base_name, list_names_capsules)
+                list_names_capsules.append(name)
+                capsule = pin.GeometryObject(
+                    name=name,
+                    parent_frame=int(geom_object.parentFrame),
+                    parent_joint=int(geom_object.parentJoint),
+                    collision_geometry=hppfcl.Capsule(
+                        geometry.radius, geometry.halfLength
+                    ),
+                    placement=geom_object.placement,
+                )
+                capsule.meshColor = np.array([249, 136, 126, 125]) / 255  # Red color
+                self.robot.collision_model.addGeometryObject(capsule)
+                self.robot.collision_model.removeGeometryObject(geom_object.name)
+
+            # Remove spheres associated with links
+            elif isinstance(geometry, hppfcl.Sphere) and "link" in geom_object.name:
+                self.robot.collision_model.removeGeometryObject(geom_object.name)
+
+        # Recreate collision data since the collision pairs changed
+        self.robot.collision_data = self.robot.collision_model.createData()
+
+        self.srdf_path = None
+        self.robot.q0 = pin.neutral(self.robot.model)
+        root = getModelPath(self.path)
+        self.robot.urdf = join(root, self.path, self.urdf_subpath, self.urdf_filename)
 
 
 class AlexNubHandsLoader(RobotLoader):
@@ -689,6 +757,7 @@ ROBOTS = {
     "kinova": KinovaLoader,
     "laikago": LaikagoLoader,
     "panda": PandaLoader,
+    "panda_collision": PandaLoaderCollision,
     "alex_nub_hands": AlexNubHandsLoader,
     "alex_psyonic_hands": AlexPsyonicHandsLoader,
     "alex_sake_hands": AlexSakeHandsLoader,
@@ -713,6 +782,7 @@ ROBOTS = {
     "tiago": TiagoLoader,
     "tiago_dual": TiagoDualLoader,
     "tiago_no_hand": TiagoNoHandLoader,
+    "tiago_pro": TiagoProLoader,
     "ur3": UR5Loader,
     "ur3_gripper": UR3GripperLoader,
     "ur3_limited": UR3LimitedLoader,
