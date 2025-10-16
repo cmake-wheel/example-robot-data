@@ -100,6 +100,9 @@ class RobotTestCase(unittest.TestCase):
     def test_hector(self):
         self.check("hector", 7, 6)
 
+    def test_human(self):
+        self.check("human", 43, 42)
+
     def test_hyq(self):
         self.check("hyq", 19, 18)
 
@@ -120,6 +123,9 @@ class RobotTestCase(unittest.TestCase):
 
     def test_panda_collision(self):
         self.check("panda_collision", 9, 9)
+
+    def test_alexander(self):
+        self.check("alexander", 20, 19)
 
     def test_alex_nub_hands(self):
         self.check("alex_nub_hands", 19, 19)
@@ -226,6 +232,9 @@ class RobotTestCase(unittest.TestCase):
 
     def test_ur10_limited(self):
         self.check("ur10_limited", 6, 6)
+
+    def test_xarm7(self):
+        self.check("xarm7", 7, 7)
 
 
 if __name__ == "__main__":
