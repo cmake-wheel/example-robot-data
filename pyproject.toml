@@ -16,7 +16,7 @@ upstream = "https://github.com/gepetto/example-robot-data"
 [tool.cmeel]
 build-number = 1
 configure-args = [
-  "-DBUILD_PYTHON_INTERFACE=OFF",
+  "-DBUILD_PYTHON_INTERFACE=OFF"
 ]
 has-binaries = false
 has-sitelib = false
