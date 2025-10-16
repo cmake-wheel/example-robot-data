@@ -1,9 +1,9 @@
 [build-system]
 build-backend = "cmeel"
-requires = ["cmeel[build]", "pin[build]"]
+requires = ["cmeel[build]", "jrl-cmakemodules"]
 
 [project]
-dependencies = ["pin"]
+dependencies = ["jrl-cmakemodules"]
 description = "Set of robot URDFs for benchmarking and developed examples."
 license = "BSD-3-Clause"
 name = "example-robot-data"
@@ -15,8 +15,12 @@ upstream = "https://github.com/gepetto/example-robot-data"
 
 [tool.cmeel]
 build-number = 1
+configure-args = [
+  "-DBUILD_PYTHON_INTERFACE=OFF",
+]
 has-binaries = false
-run-tests-after-install = true
+has-sitelib = false
+run-tests = false
 
 [tool.ruff]
 extend-exclude = ["cmake"]

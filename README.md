@@ -7,6 +7,15 @@
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/gepetto/example-robot-data/master.svg)](https://results.pre-commit.ci/latest/github/gepetto/example-robot-data/master)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
+<div style="border:2px solid orange; background-color:#fff3cd; padding:10px; border-radius:8px;">
+  <h2>⚠️ WARNING</h2>
+  <p>
+      example-robot-data >= 4.4.0 contains <strong>only</strong> the robot models.<br>
+      if you want the python loaders: <a href="https://pypi.org/project/example-robot-data-loaders/"><strong><code>pip install example-robot-data-loaders</code></strong></a>
+  </p>
+</div>
+
+
 
 This repository includes a set of robot descriptions that are aimed to be used in benchmarking, unit-tests, teachings,
 tutorials or show-cases. These source files do not intend to substitute their original repositories.
