@@ -47,7 +47,7 @@ jobs:
         os: ["ubuntu-24.04"]
         python: ["cp313"]
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: "artifact-${{ matrix.os }}-${{ matrix.python }}"
           path: wheelhouse
@@ -90,7 +90,7 @@ jobs:
     needs: ["sdist"]
     name: "Test sdist"
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: "artifact-sdist"
           path: dist
@@ -121,7 +121,7 @@ jobs:
         run: >
           git verify-tag --raw ${{ github.ref_name }} 2>&1
           | grep -q 'VALIDSIG 9B1A79065D2F2B806C8A5A1C7D2ACDAF4653CF28'
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           merge-multiple: true
           path: dist
