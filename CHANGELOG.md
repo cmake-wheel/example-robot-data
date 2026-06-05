@@ -6,7 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-## [4.4.0] - 1980-01-01
+## [5.0.0] - 2026-06-05
+
+### Added
+
+- Unit testing inertia validity and projected rotation inertial to the fully-physical consistent set ([#370](https://github.com/Gepetto/example-robot-data/pull/370))
+- Installing example-robot-data without hppfcl ([#338](https://github.com/Gepetto/example-robot-data/pull/338))
+- ROS: jrl_cmakemodules dependency ([#330](https://github.com/Gepetto/example-robot-data/pull/330))
+- Added Centauro ([#346](https://github.com/Gepetto/example-robot-data/pull/346))
+
+### Changed
+
+- Use coal instead of hppfcl ([#374](https://github.com/Gepetto/example-robot-data/pull/374))
+
+### Removed
+
+- removed cmake submodule ([#375](https://github.com/Gepetto/example-robot-data/pull/375))
+
+## [4.4.0] - 2025-09-29
 
 - The default git branch is now devel
 - ur_description : remove ALL "LightGrey" materials
@@ -324,7 +341,8 @@ Added optionnal python helpers, which depend on pinocchio
 
 Initial release
 
-[Unreleased]: https://github.com/gepetto/example-robot-data/compare/v4.4.0...HEAD
+[Unreleased]: https://github.com/gepetto/example-robot-data/compare/v5.0.0...HEAD
+[5.0.0]: https://github.com/gepetto/example-robot-data/compare/v4.4.0...v5.0.0
 [4.4.0]: https://github.com/gepetto/example-robot-data/compare/v4.3.0...v4.4.0
 [4.3.0]: https://github.com/gepetto/example-robot-data/compare/v4.2.0...v4.3.0
 [4.2.0]: https://github.com/gepetto/example-robot-data/compare/v4.1.0...v4.2.0
