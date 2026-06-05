@@ -8,7 +8,9 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 > [!WARNING]
+>
 > example-robot-data >= 4.4.0 contains **only** the robot models.
+>
 > if you want the python loaders: **[`pip install example-robot-data-loaders`](https://pypi.org/project/example-robot-data-loaders/)**
 
 This repository includes a set of robot descriptions that are aimed to be used in benchmarking, unit-tests, teachings,
