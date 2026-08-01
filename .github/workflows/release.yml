@@ -28,7 +28,7 @@ jobs:
         with:
           submodules: 'true'
       - run: echo "${{ matrix.python }}" | sed "s/cp3/PYTHON_VERSION=3./" >> "${GITHUB_ENV}"
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - run: python -m pip install -U pip
@@ -52,7 +52,7 @@ jobs:
           name: "artifact-${{ matrix.os }}-${{ matrix.python }}"
           path: wheelhouse
       - run: echo "${{ matrix.python }}" | sed "s/cp3/PYTHON_VERSION=3./" >> "${GITHUB_ENV}"
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: index
@@ -71,7 +71,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           submodules: 'true'
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: 3.13
       - name: setup
@@ -94,7 +94,7 @@ jobs:
         with:
           name: "artifact-sdist"
           path: dist
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: 3.13
       - name: setup
